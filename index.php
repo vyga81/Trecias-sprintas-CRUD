@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,12 +16,7 @@
     <?php
     include 'dbconfig.php';
 
-    // Create connection
-    $conn = mysqli_connect($servername, $username, $password, $dbname);
-    // Check connection
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
+
 
     $sql = "SELECT id, first_name, last_name FROM people";
     $result = mysqli_query($conn, $sql);
@@ -29,12 +27,11 @@
     <thead>");
     print("<tr><th class='fs-3'>Id</th><th class='fs-3'>Name</th><th class='fs-3'>Lastname</th></tr>");
     print("</thead>");
-    print(
-           "<td>
+    print("<td>
             <a href='add.php' class='btn btn-success text-light text-decoration-none'>Add<a>
             
             </td>"
-            
+
     );
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
@@ -54,6 +51,25 @@
     }
     print("</table>");
     mysqli_close($conn);
+
+    //add new user
+    if (isset($_POST['add_save'])) {
+        $first_name = mysqli_real_escape_string($conn, $_POST['first_name']);
+        $last_name = mysqli_real_escape_string($conn, $_POST['last_name']);
+
+        $query = "INSERT INTO manodb (first_name,last_name) VALUES ('$first_name','$last_name')";
+
+        $query_run = mysqli_query($conn, $query);
+        if ($query_run) {
+            $_SESSION['message'] = "employee added successfully";
+            header("Location: add.php");
+            exit(0);
+        } else {
+            $_SESSION['message'] = "employee not added";
+            header("Location: add.php");
+            exit(0);
+        }
+    }
     ?>
 </body>
 
