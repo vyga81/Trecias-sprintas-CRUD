@@ -1,5 +1,26 @@
 <?php
 session_start();
+include 'dbconfig.php';
+
+//add new user
+if (isset($_POST['add_save'])) {
+    $first_name = mysqli_real_escape_string($conn, $_POST['first_name']);
+    $last_name = mysqli_real_escape_string($conn, $_POST['last_name']);
+    echo $first_name;
+    echo $last_name;
+    $query = "INSERT INTO people (first_name,last_name) VALUES ('$first_name','$last_name')";
+
+    $query_run = mysqli_query($conn, $query);
+    if ($query_run) {
+        $_SESSION['message'] = "Employee added successfully";
+        header("Location: add.php");
+        exit(0);
+    } else {
+        $_SESSION['message'] = "Employee not added";
+        header("Location: add.php");
+        exit(0);
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +35,6 @@ session_start();
 
 <body class="container bg-warning">
     <?php
-    include 'dbconfig.php';
 
 
 
@@ -23,7 +43,7 @@ session_start();
 
     include 'nav.php';
 
-    print("<table class='table'>
+    print("<table class='table table-bordered table-striped'>
     <thead>");
     print("<tr><th class='fs-3'>Id</th><th class='fs-3'>Name</th><th class='fs-3'>Lastname</th></tr>");
     print("</thead>");
@@ -52,24 +72,7 @@ session_start();
     print("</table>");
     mysqli_close($conn);
 
-    //add new user
-    if (isset($_POST['add_save'])) {
-        $first_name = mysqli_real_escape_string($conn, $_POST['first_name']);
-        $last_name = mysqli_real_escape_string($conn, $_POST['last_name']);
 
-        $query = "INSERT INTO manodb (first_name,last_name) VALUES ('$first_name','$last_name')";
-
-        $query_run = mysqli_query($conn, $query);
-        if ($query_run) {
-            $_SESSION['message'] = "employee added successfully";
-            header("Location: add.php");
-            exit(0);
-        } else {
-            $_SESSION['message'] = "employee not added";
-            header("Location: add.php");
-            exit(0);
-        }
-    }
     ?>
 </body>
 

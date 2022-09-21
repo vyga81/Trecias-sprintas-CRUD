@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +13,7 @@
 </head>
 
 <body class="bg-warning ">
-    <?php include('message.php');?>
+    <?php include('message.php'); ?>
     <div class="container mt-5">
         <div class="row md-15 ">
             <div class="col-md-12">
@@ -21,7 +24,7 @@
                         </h4>
                     </div>
                     <div class="card-body">
-                        <form action="add.php" method="POST">
+                        <form action="index.php" method="POST">
                             <div class="mb-3">
                                 <label class="fs-3">First name</label>
                                 <input type="text" name="first_name" class="form-control">
