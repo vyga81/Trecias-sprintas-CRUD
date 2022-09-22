@@ -1,8 +1,47 @@
 <?php
 session_start();
 include 'dbconfig.php';
+//
+if (isset($_POST['edit_save'])) {
+    $id = mysqli_real_escape_string($conn, $_GET["id"]);
 
-//add new user
+    $first_name = mysqli_real_escape_string($conn, $_POST['first_name']);
+    $last_name = mysqli_real_escape_string($conn, $_POST['last_name']);
+
+    $query = "UPDATE people SET  first_name = '{$first_name}', last_name = '{$last_name}' WHERE id = {$id}";
+    echo $query;
+    $query_run = mysqli_query($conn, $query);
+
+    if ($query_run) {
+        $_SESSION['message'] = "Edited successfully";
+        header("Location: index.php");
+        exit(0);
+    } else {
+        $_SESSION['message'] = " Not edited";
+        header("Location: index.php");
+        exit(0);
+    }
+}
+//checking the delete button
+if (isset($_POST['delete'])) {
+
+    $id = mysqli_real_escape_string($conn, $_GET["id"]);
+
+    $query = "DELETE FROM people WHERE id ='$id'";
+    $query_run = mysqli_query($conn, $query);
+
+    if ($query_run) {
+        $_SESSION['message'] = "Deleted successfully";
+        header("Location: index.php");
+        exit(0);
+    } else {
+        $_SESSION['message'] = "Not deleted";
+        header("Location: index.php");
+        exit(0);
+    }
+}
+
+//adding new user
 if (isset($_POST['add_save'])) {
     $first_name = mysqli_real_escape_string($conn, $_POST['first_name']);
     $last_name = mysqli_real_escape_string($conn, $_POST['last_name']);
@@ -10,6 +49,8 @@ if (isset($_POST['add_save'])) {
     echo $last_name;
     $query = "INSERT INTO people (first_name,last_name) VALUES ('$first_name','$last_name')";
 
+
+    //Message to inform user added successfully or not
     $query_run = mysqli_query($conn, $query);
     if ($query_run) {
         $_SESSION['message'] = "Employee added successfully";
@@ -33,9 +74,9 @@ if (isset($_POST['add_save'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
-<body class="container bg-warning">
+<body class="container bg-warning mt-4">
     <?php
-
+    include 'message.php';
 
 
     $sql = "SELECT id, first_name, last_name FROM people";
@@ -48,7 +89,7 @@ if (isset($_POST['add_save'])) {
     print("<tr><th class='fs-3'>Id</th><th class='fs-3'>Name</th><th class='fs-3'>Lastname</th></tr>");
     print("</thead>");
     print("<td>
-            <a href='add.php' class='btn btn-success text-light text-decoration-none'>Add<a>
+            <a href='add.php' class='btn btn-success text-light text-decoration-none'>Add employee<a>
             
             </td>"
 
@@ -58,11 +99,13 @@ if (isset($_POST['add_save'])) {
             // echo "id: " . $row["id"] . " - Name: " . $row["first_name"] . " " . $row["last_name"] . "<br>";
             print("<tr><td class='fs-4' >{$row["id"]}</td><td class='fs-4'>{$row["first_name"]}</td><td class='fs-4'>{$row["last_name"]}</td>
             <td>
-            <a href='edit.php' class='btn btn-success text-light text-decoration-none'>Edit<a>
+            <a href='edit.php?id={$row["id"]}' class='btn btn-success text-light text-decoration-none'>Edit<a>
             
             </td>
             <td>
-            <a href='' class='btn btn-danger text-light text-decoration-none'>Delete<a/>
+            <form  action='index.php' method='POST' class='d-inline'>
+            <button type='submit', name='delete', value='<?={$row['id']}?>', class='btn btn-danger text-light text-decoration-none'>Delete<button/>
+            </form>
             </td>
             </tr>");
         }
