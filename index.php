@@ -79,14 +79,15 @@ if (isset($_POST['add_save'])) {
     include 'message.php';
 
 
-    $sql = "SELECT id, first_name, last_name FROM people";
+    $sql = "SELECT people.id, first_name, last_name, Project_ID, projects.project_name FROM people 
+            LEFT JOIN projects ON projects.Id = people.Project_ID ";
     $result = mysqli_query($conn, $sql);
 
     include 'nav.php';
 
     print("<table class='table table-bordered table-striped'>
     <thead>");
-    print("<tr><th class='fs-3'>Id</th><th class='fs-3'>Name</th><th class='fs-3'>Lastname</th></tr>");
+    print("<tr><th class='fs-3'>Employee id</th><th class='fs-3'>Employee</th><th class='fs-3'>Project</th></tr>");
     print("</thead>");
     print("<td>
             <a href='add.php' class='btn btn-success text-light text-decoration-none'>Add employee<a>
@@ -96,10 +97,9 @@ if (isset($_POST['add_save'])) {
     );
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
-            // echo "id: " . $row["id"] . " - Name: " . $row["first_name"] . " " . $row["last_name"] . "<br>";
-            print("<tr><td class='fs-4' >{$row["id"]}</td><td class='fs-4'>{$row["first_name"]}</td><td class='fs-4'>{$row["last_name"]}</td>
+            print("<tr><td class='fs-4' >{$row["id"]}</td><td class='fs-4'>" . $row["first_name"] . ' ' . $row["last_name"] . "</td><td class='fs-4' >{$row["project_name"]}</td>
             <td>
-            <a href='edit.php?id={$row["id"]}' class='btn btn-success text-light text-decoration-none'>Edit<a>
+            <a href='edit.php?id={$row["id"]}' class='btn btn-success text-light text-decoration-none'>Edit employee<a>
             
             </td>
             <td>
