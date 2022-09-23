@@ -23,7 +23,7 @@ if (isset($_POST['edit_save'])) {
     }
 }
 //checking the delete button
-if (isset($_POST['delete'])) {
+if (isset($_GET['action']) && $_GET['action'] === 'delete') {
 
     $id = mysqli_real_escape_string($conn, $_GET["id"]);
 
@@ -103,9 +103,7 @@ if (isset($_POST['add_save'])) {
             
             </td>
             <td>
-            <form  action='index.php' method='POST' class='d-inline'>
-            <button type='submit', name='delete', value='<?={$row['id']}?>', class='btn btn-danger text-light text-decoration-none'>Delete<button/>
-            </form>
+             <a href='index.php?action=delete&id={$row["id"]}' class='btn btn-danger text-light text-decoration-none'>Delete<a>
             </td>
             </tr>");
         }
