@@ -20,7 +20,7 @@ session_start();
                 <div class="card">
                     <div class="card-header">
                         <h4> Add employee
-                            <a href="index.php" class="btn btn-danger float-end">back</a>
+                            <a href="index.php" class="btn btn-info float-end">back</a>
                         </h4>
                     </div>
                     <div class="card-body">

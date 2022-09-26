@@ -9,7 +9,7 @@ if (isset($_POST['edit_save'])) {
     $last_name = mysqli_real_escape_string($conn, $_POST['last_name']);
 
     $query = "UPDATE people SET  first_name = '{$first_name}', last_name = '{$last_name}' WHERE id = {$id}";
-    echo $query;
+    
     $query_run = mysqli_query($conn, $query);
 
     if ($query_run) {
@@ -70,7 +70,7 @@ if (isset($_POST['add_save'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Employee&project MANAGER</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
