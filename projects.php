@@ -14,6 +14,8 @@
 
     include 'dbconfig.php';
 
+
+
     // Create connection
     $conn = mysqli_connect($servername, $username, $password, $dbname);
     // Check connection
@@ -21,9 +23,11 @@
         die("Connection failed: " . mysqli_connect_error());
     }
 
-    $sql = "SELECT people.id, first_name, last_name, Project_ID, projects.project_name FROM people 
-            LEFT JOIN projects ON projects.Id = people.Project_ID ";
+    $sql = "SELECT projects.project_name, projects.Id AS project_id, people.first_name, people.last_name, people.id FROM projects 
+            LEFT JOIN people ON people.Project_ID = projects.Id";
     $result = mysqli_query($conn, $sql);
+
+
 
     include 'nav.php';
     // require_once 'project_update.php';
@@ -36,11 +40,11 @@
         while ($row = mysqli_fetch_assoc($result)) {
             print("<tr><td class='fs-4' >{$row["id"]}</td><td class='fs-4'>" . $row["first_name"] . ' ' . $row["last_name"] . "</td></td><td class='fs-4' >{$row["project_name"]}</td>
             <td>
-            <a href='project_update.php?id={$row["id"]}' class='btn btn-success text-light text-decoration-none'>Edit project<a>
+            <a href='project_update.php?id={$row["project_id"]}' class='btn btn-success text-light text-decoration-none'>Edit project<a>
             
             </td>
             <td>
-             <a href='projects.php?action=delete&Id={$row["Id"]}' class='btn btn-danger text-light text-decoration-none'>Delete project<a>
+             <a href='?action=delete&Id={$row["project_id"]}' class='btn btn-danger text-light text-decoration-none'>Delete project<a>
             </td>
             </tr>");
         }
@@ -48,27 +52,30 @@
         echo "0 results";
     }
     print("</table>");
-    mysqli_close($conn);
-
 
     //checking the delete button
     if (isset($_GET['action']) && $_GET['action'] === 'delete') {
 
         $Id = mysqli_real_escape_string($conn, $_GET["Id"]);
 
-        $query = "DELETE FROM project WHERE Id ='$Id'";
+        $query = "DELETE FROM projects WHERE Id ='$Id'";
         $query_run = mysqli_query($conn, $query);
 
         if ($query_run) {
             $_SESSION['message'] = "Deleted successfully";
-            header("Location: index.php");
+            header("Location: projects.php");
             exit(0);
         } else {
             $_SESSION['message'] = "Not deleted";
-            header("Location: index.php");
+            header("Location: projects.php");
             exit(0);
         }
     }
+
+
+    mysqli_close($conn);
+
+
     ?>
 </body>
 

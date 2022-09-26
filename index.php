@@ -9,7 +9,26 @@ if (isset($_POST['edit_save'])) {
     $last_name = mysqli_real_escape_string($conn, $_POST['last_name']);
 
     $query = "UPDATE people SET  first_name = '{$first_name}', last_name = '{$last_name}' WHERE id = {$id}";
-    
+
+    $query_run = mysqli_query($conn, $query);
+
+    if ($query_run) {
+        $_SESSION['message'] = "Edited successfully";
+        header("Location: index.php");
+        exit(0);
+    } else {
+        $_SESSION['message'] = " Not edited";
+        header("Location: index.php");
+        exit(0);
+    }
+}
+if (isset($_POST['update_project'])) {
+    $id = mysqli_real_escape_string($conn, $_GET["id"]);
+
+    $project = mysqli_real_escape_string($conn, $_POST['project']);
+
+    $query = "UPDATE projects SET  project_name = '{$project}' WHERE Id = {$id}";
+
     $query_run = mysqli_query($conn, $query);
 
     if ($query_run) {
