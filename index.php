@@ -27,7 +27,7 @@ if (isset($_POST['update_project'])) {
 
     $project = mysqli_real_escape_string($conn, $_POST['project']);
 
-    $query = "UPDATE projects SET  project_name = '{$project}' WHERE Id = {$id}";
+    $query = "UPDATE people SET project_id = '{$project}' WHERE Id = {$id}";
 
     $query_run = mysqli_query($conn, $query);
 
@@ -60,27 +60,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete') {
     }
 }
 
-//adding new user
-if (isset($_POST['add_save'])) {
-    $first_name = mysqli_real_escape_string($conn, $_POST['first_name']);
-    $last_name = mysqli_real_escape_string($conn, $_POST['last_name']);
-    echo $first_name;
-    echo $last_name;
-    $query = "INSERT INTO people (first_name,last_name) VALUES ('$first_name','$last_name')";
 
-
-    //Message to inform user added successfully or not
-    $query_run = mysqli_query($conn, $query);
-    if ($query_run) {
-        $_SESSION['message'] = "Employee added successfully";
-        header("Location: add.php");
-        exit(0);
-    } else {
-        $_SESSION['message'] = "Employee not added";
-        header("Location: add.php");
-        exit(0);
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
