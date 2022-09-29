@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 require 'dbconfig.php';
 
 $query = "SELECT * FROM projects";
@@ -14,7 +12,7 @@ if (isset($_POST['add_project_save'])) {
     // $first_name = mysqli_real_escape_string($conn, $_POST['first_name']);
     // $last_name = mysqli_real_escape_string($conn, $_POST['last_name']);
     $project = mysqli_real_escape_string($conn, $_POST['add_new_project']);
-    print_r($project);
+    // print_r($project);
     $query = "INSERT INTO projects (project_name ) VALUES ('$project')";
     // $query = "INSERT INTO people (first_name, last_name, Project_ID ) VALUES ('$first_name','$last_name', '$project')";
     //adding project

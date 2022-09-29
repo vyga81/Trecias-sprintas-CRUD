@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 require 'dbconfig.php';
 
 $query = "SELECT * FROM projects";

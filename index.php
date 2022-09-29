@@ -1,46 +1,7 @@
 <?php
-session_start();
 include 'dbconfig.php';
 //
-if (isset($_POST['edit_save'])) {
-    $id = mysqli_real_escape_string($conn, $_GET["id"]);
 
-    $first_name = mysqli_real_escape_string($conn, $_POST['first_name']);
-    $last_name = mysqli_real_escape_string($conn, $_POST['last_name']);
-
-    $query = "UPDATE people SET  first_name = '{$first_name}', last_name = '{$last_name}' WHERE id = {$id}";
-
-    $query_run = mysqli_query($conn, $query);
-
-    if ($query_run) {
-        $_SESSION['message'] = "Edited successfully";
-        header("Location: index.php");
-        exit(0);
-    } else {
-        $_SESSION['message'] = " Not edited";
-        header("Location: index.php");
-        exit(0);
-    }
-}
-if (isset($_POST['update_project'])) {
-    $id = mysqli_real_escape_string($conn, $_GET["id"]);
-
-    $project = mysqli_real_escape_string($conn, $_POST['project']);
-
-    $query = "UPDATE people SET project_id = '{$project}' WHERE Id = {$id}";
-
-    $query_run = mysqli_query($conn, $query);
-
-    if ($query_run) {
-        $_SESSION['message'] = "Edited successfully";
-        header("Location: index.php");
-        exit(0);
-    } else {
-        $_SESSION['message'] = " Not edited";
-        header("Location: index.php");
-        exit(0);
-    }
-}
 //checking the delete button
 if (isset($_GET['action']) && $_GET['action'] === 'delete') {
 
