@@ -8,7 +8,7 @@ $project = mysqli_real_escape_string($conn, $_POST['project']);
 
 
 
-//adding new user
+//adding new project
 if (isset($_POST['add_save'])) {
     if (!empty($_POST[$project])) {
 
