@@ -11,7 +11,7 @@ To run the project on your own system you need:
 
 How to setup:
 1. Download the zip file from  this link:
-  
+  https://github.com/vyga81/Trecias-sprintas-CRUD.git
 2. Extract the folder into your XAMPP htdocs folder. The file is usualy located in:
   This PC > Local Disk (C:) > xampp > htdocs
 3. In mysql workbench create a connection and import the Tables.sql as a self contained file.
